@@ -4,15 +4,30 @@ import React, { Component } from 'react'
 import { Carousel } from 'antd-mobile'
 //样式
 import styles from './index.module.scss'
+//导入api
+import { getCarousel } from '@/api'
+//导入环境地址
+import { BASE_URL } from '@/utils/url.js'
 
 export class Index extends Component {
   constructor() {
     super()
     this.state = {
-      isLoading: false,
+      isLoading: true,
       //正在加载轮播
       imgList: [],
       imgHeight: 212
+    }
+  }
+
+  async componentDidMount() {
+    let res = await getCarousel()
+    // console.log(res.data)
+    if (res.data.status === 200) {
+      this.setState({
+        isLoading: false,
+        imgList: res.data.body
+      })
     }
   }
 
@@ -20,9 +35,9 @@ export class Index extends Component {
   renderCarousel = () => {
     return (
       <Carousel autoplay infinite>
-        {this.state.imgList.map(val => (
+        {this.state.imgList.map(item => (
           <a
-            key={val}
+            key={item.id}
             href="http://www.alipay.com"
             style={{
               display: 'inline-block',
@@ -31,7 +46,7 @@ export class Index extends Component {
             }}
           >
             <img
-              src={`https://zos.alipayobjects.com/rmsportal/${val}.png`}
+              src={`${BASE_URL}${item.imgSrc}`}
               alt=""
               style={{ width: '100%', verticalAlign: 'top' }}
               onLoad={() => {
