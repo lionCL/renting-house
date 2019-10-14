@@ -25,4 +25,20 @@ function getNews(areaId) {
   })
 }
 
-export { getCarousel, getGroups, getNews }
+//获取城市列表信息   1/2
+function getCityList(num) {
+  return request({
+    url: `/area/city?level=${num}`,
+    method: 'get'
+  })
+}
+
+//获取热门城市
+function getHotCity() {
+  return request({
+    url: `/area/hot`,
+    method: 'get'
+  })
+}
+
+export { getCarousel, getGroups, getNews, getCityList, getHotCity }
