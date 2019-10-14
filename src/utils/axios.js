@@ -8,4 +8,14 @@ const instance = axios.create({
   baseURL: BASE_URL
 })
 
+//响应拦截
+instance.interceptors.response.use(
+  response => {
+    return response.data
+  },
+  error => {
+    return Promise.reject(error)
+  }
+)
+
 export default instance
