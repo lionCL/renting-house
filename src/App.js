@@ -11,6 +11,8 @@ import './assets/fonts/iconfont.css'
 //导入组件
 import Home from './views/Home'
 import Login from './views/Login'
+import CityList from './views/CityList'
+import Map from './views/Map'
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <Switch>
           <Route path="/home" component={Home} />
           <Route path="/login" component={Login} />
+          <Route path="/citylist" component={CityList} />
+          <Route path="/map" component={Map} />
           <Redirect exact from="/" to="/home" />
         </Switch>
       </div>

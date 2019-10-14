@@ -16,6 +16,9 @@ import image2 from '@/assets/images/nav-2.png'
 import image3 from '@/assets/images/nav-3.png'
 import image4 from '@/assets/images/nav-4.png'
 
+//导入子组件
+import SearchHeader from '@/components/SearchHeader'
+
 export class Index extends Component {
   constructor() {
     super()
@@ -190,6 +193,8 @@ export class Index extends Component {
   render() {
     return (
       <div className={styles.root}>
+        {/* 渲染头部搜索栏 */}
+        <SearchHeader cityName="深圳"></SearchHeader>
         {/* 渲染轮播 */}
         {!this.state.isLoading && this.renderCarousel()}
         {/* 渲染导航菜单 */}
