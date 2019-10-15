@@ -22,8 +22,7 @@ export function getCurrentCity() {
           //将对象resolve出去
           resolve(resData)
           //保存到本地
-          const { label, value } = resData
-          setCity({ label, value })
+          setCity(resData)
         } catch (error) {
           reject(error)
         }

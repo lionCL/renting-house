@@ -8,6 +8,9 @@ import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
 //全局字体图标样式
 import './assets/fonts/iconfont.css'
 
+//导入长列表优化样式
+import 'react-virtualized/styles.css'
+
 //导入组件
 import Home from './views/Home'
 import Login from './views/Login'
