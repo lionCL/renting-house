@@ -41,4 +41,12 @@ function getHotCity() {
   })
 }
 
-export { getCarousel, getGroups, getNews, getCityList, getHotCity }
+//根据城市名称查询该城市信息
+function getCityInfo(cityName) {
+  return request({
+    url: `/area/info?name=${cityName}`,
+    method: 'get'
+  })
+}
+
+export { getCarousel, getGroups, getNews, getCityList, getHotCity, getCityInfo }

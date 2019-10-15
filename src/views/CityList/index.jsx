@@ -6,6 +6,10 @@ import NavHeader from '@/components/NavHeader'
 //导入api
 import { getCityList, getHotCity } from '@/api'
 
+import { getCurrentCity } from '@/utils/city.js'
+
+// const BMap = window.BMap
+
 export default class CityList extends Component {
   constructor() {
     super()
@@ -39,6 +43,11 @@ export default class CityList extends Component {
       let hotCity = await getHotCity()
       cityIndex.unshift('hot')
       cityListObj['hot'] = hotCity.body
+
+      //4.处理城市定位
+      cityIndex.unshift('#')
+      const city = await getCurrentCity()
+      cityListObj['#'] = [city]
 
       //赋值给模型
       this.setState({

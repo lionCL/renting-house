@@ -2,7 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 import { withRouter } from 'react-router-dom'
-import { styles } from 'ansi-colors'
+
+//导入样式
+import styles from './index.module.scss'
 
 import { NavBar } from 'antd-mobile'
 
