@@ -19,6 +19,9 @@ import image4 from '@/assets/images/nav-4.png'
 //导入子组件
 import SearchHeader from '@/components/SearchHeader'
 
+//导入获取本地操作的方法
+import { getCurrentCity } from '@/utils/city'
+
 export class Index extends Component {
   constructor() {
     super()
@@ -27,7 +30,8 @@ export class Index extends Component {
       imgList: [], //轮播图片信息
       imgHeight: 212,
       groups: [], //住房小组信息
-      news: [] //最新资讯信息
+      news: [], //最新资讯信息
+      currentCity: '深圳'
     }
   }
   //导航菜单数据
@@ -42,6 +46,16 @@ export class Index extends Component {
     this.getCarouselData()
     this.getGroupsData()
     this.getNewsData()
+    this.getLocationCity()
+  }
+
+  //获取定位城市并设置
+  async getLocationCity() {
+    const { label } = await getCurrentCity()
+
+    this.setState({
+      currentCity: label
+    })
   }
 
   //获取轮播数据
@@ -75,6 +89,8 @@ export class Index extends Component {
       })
     }
   }
+
+  //获取本地
 
   // 渲染轮播
   renderCarousel = () => {
@@ -194,7 +210,7 @@ export class Index extends Component {
     return (
       <div className={styles.root}>
         {/* 渲染头部搜索栏 */}
-        <SearchHeader cityName="深圳"></SearchHeader>
+        <SearchHeader cityName={this.state.currentCity}></SearchHeader>
         {/* 渲染轮播 */}
         {!this.state.isLoading && this.renderCarousel()}
         {/* 渲染导航菜单 */}
