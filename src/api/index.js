@@ -49,4 +49,57 @@ function getCityInfo(cityName) {
   })
 }
 
-export { getCarousel, getGroups, getNews, getCityList, getHotCity, getCityInfo }
+//根据区域id，查询该区域的房源数据
+function getAreaHouse(id) {
+  return request({
+    url: `/area/map?id=${id}`,
+    method: 'get'
+  })
+}
+
+//根据条件查询房屋所需要的各种数据
+function getHouseListById(query) {
+  const {
+    cityId,
+    area,
+    subway,
+    rentType,
+    price,
+    more,
+    roomType,
+    oriented,
+    characteristic,
+    floor,
+    start,
+    end
+  } = query
+  return request({
+    url: `/houses`,
+    method: 'get',
+    params: {
+      cityId,
+      area,
+      subway,
+      rentType,
+      price,
+      more,
+      roomType,
+      oriented,
+      characteristic,
+      floor,
+      start,
+      end
+    }
+  })
+}
+
+export {
+  getCarousel,
+  getGroups,
+  getNews,
+  getCityList,
+  getHotCity,
+  getCityInfo,
+  getAreaHouse,
+  getHouseListById
+}
