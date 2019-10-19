@@ -93,6 +93,14 @@ function getHouseListById(query) {
   })
 }
 
+//房屋查询筛选条件
+function FilterList(value) {
+  return request({
+    url: `/houses/condition?id=${value}`,
+    method: 'get'
+  })
+}
+
 export {
   getCarousel,
   getGroups,
@@ -101,5 +109,6 @@ export {
   getHotCity,
   getCityInfo,
   getAreaHouse,
-  getHouseListById
+  getHouseListById,
+  FilterList
 }

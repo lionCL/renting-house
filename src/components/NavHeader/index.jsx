@@ -22,7 +22,7 @@ function NavHeader({ history, children, className, rightContent }) {
   )
 }
 //传值规则
-NavHeader.prototype = {
+NavHeader.propTypes = {
   children: PropTypes.string.isRequired
 }
 

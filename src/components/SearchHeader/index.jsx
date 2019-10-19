@@ -8,9 +8,10 @@ import { Flex } from 'antd-mobile'
 import styles from './index.module.scss'
 
 //结构props
-function SearchHeader({ cityName, history }) {
+function SearchHeader({ cityName, history, className }) {
   return (
-    <div className={styles.root}>
+    <div className={[styles.root, className].join(' ')}>
+      {/* 拼接传递过来的样式类名 */}
       <Flex>
         <Flex className={styles.searchLeft}>
           <div
