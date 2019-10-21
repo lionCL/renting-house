@@ -3,7 +3,7 @@ import { Toast } from 'antd-mobile'
 
 //导入api
 import { getCurrentCity } from '@/utils/city'
-import { getAreaHouse, getHouseListById } from '@/api/'
+import { getAreaHouse, getHouseList } from '@/api/'
 
 //导入子组件
 import NavHeader from '@/components/NavHeader'
@@ -228,7 +228,7 @@ export default class Map extends Component {
   //获取房源列表
   getHouseListById = async id => {
     Toast.loading('数据加载中...', 0)
-    const res = await getHouseListById({ cityId: id })
+    const res = await getHouseList({ cityId: id })
     console.log(res)
     Toast.hide()
 

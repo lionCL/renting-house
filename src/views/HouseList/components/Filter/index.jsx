@@ -10,6 +10,9 @@ import FilterTitle from '@/views/HouseList/components/FilterTitle'
 import FilterPicker from '@/views/HouseList/components/FilterPicker'
 import FilterMore from '@/views/HouseList/components/FilterMore'
 
+// 导入动画库
+import { Spring } from 'react-spring/renderprops'
+
 export default class Filter extends Component {
   constructor() {
     super()
@@ -92,14 +95,6 @@ export default class Filter extends Component {
     )
   }
 
-  //取消的方法
-  onCancel = () => {
-    //还原选中的状态
-    this.setState({
-      openType: ''
-    })
-  }
-
   //确认的方法
   onSave = (type, value) => {
     const { selectValues } = this.state
@@ -114,6 +109,42 @@ export default class Filter extends Component {
       () => {
         //处理filterTitle的选中状态
         this.changeTitleSelectedStatus()
+
+        // todo 把收集到的数据，经过处理，然后传递给HouseList作为查询房源列表的参数
+        const { selectValues } = this.state
+        const filterData = {}
+        //处理区域数据
+        const key = selectValues['area'][0]
+        if (selectValues['area'].length === 2) {
+          filterData[key] = null
+        } else if (selectValues['area'].length === 3) {
+          filterData[key] =
+            selectValues['area'][2] === 'null'
+              ? selectValues['area'][1]
+              : selectValues['area'][2]
+        }
+        //处理方式的数据
+        filterData.rentType = selectValues['mode'][0]
+        //处理租金的数据
+        filterData.price = selectValues['price'][0]
+        //处理more
+        filterData.more = selectValues['more'].join(',')
+
+        //当onFilter存在时候调用
+        this.props.onFilter && this.props.onFilter(filterData)
+      }
+    )
+  }
+
+  //取消的方法
+  onCancel = () => {
+    //还原选中的状态
+    this.setState(
+      {
+        openType: ''
+      },
+      () => {
+        this.changeTitleSelectedStatus()
       }
     )
   }
@@ -121,8 +152,26 @@ export default class Filter extends Component {
   // 遮罩层渲染
   renderMask = () => {
     const { openType } = this.state
-    if (openType === '' || openType === 'more') return null
-    return <div className={styles.mask}></div>
+    //是否隐藏
+    const isHide = openType === 'more' || openType === ''
+
+    return (
+      <Spring to={{ opacity: isHide ? 0 : 1 }} config={{ duration: 300 }}>
+        {props => {
+          if (props.opacity === 0) {
+            return null
+          }
+
+          return (
+            <div
+              style={props}
+              className={styles.mask}
+              onClick={this.onCancel}
+            ></div>
+          )
+        }}
+      </Spring>
+    )
   }
 
   // 渲染filterPicker
@@ -168,11 +217,28 @@ export default class Filter extends Component {
   //渲染筛选more
   renderFilterMore = () => {
     const { openType } = this.state
-    if (openType === 'more') {
-      return <FilterMore />
-    } else {
-      return null
-    }
+    if (openType !== 'more') return null
+    //取出值
+    const {
+      filterData: { characteristic, floor, oriented, roomType },
+      selectValues
+    } = this.state
+
+    //判断
+    if (openType !== 'more') return null
+
+    const data = { characteristic, floor, oriented, roomType }
+
+    const defaultValue = selectValues['more']
+
+    return (
+      <FilterMore
+        data={data}
+        defaultValue={defaultValue}
+        onSave={this.onSave}
+        onCancel={this.onCancel}
+      />
+    )
   }
 
   render() {

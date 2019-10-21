@@ -58,7 +58,7 @@ function getAreaHouse(id) {
 }
 
 //根据条件查询房屋所需要的各种数据
-function getHouseListById(query) {
+function getHouseList(query) {
   const {
     cityId,
     area,
@@ -109,6 +109,6 @@ export {
   getHotCity,
   getCityInfo,
   getAreaHouse,
-  getHouseListById,
+  getHouseList,
   FilterList
 }

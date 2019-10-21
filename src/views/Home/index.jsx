@@ -94,12 +94,12 @@ class Home extends Component {
     return (
       <div className={styles.home}>
         {/* 跳转路由 */}
-        <div>
-          <Route exact path="/home" component={Index} />
-          <Route path="/home/list" component={HouseList} />
-          <Route path="/home/news" component={News} />
-          <Route path="/home/profile" component={Profile} />
-        </div>
+
+        <Route exact path="/home" component={Index} />
+        <Route path="/home/list" component={HouseList} />
+        <Route path="/home/news" component={News} />
+        <Route path="/home/profile" component={Profile} />
+
         {/* TabBar */}
         <div className={styles.tabBar}>{this.renderTabBar()}</div>
       </div>

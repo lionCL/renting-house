@@ -21,7 +21,7 @@ function HouseItem({ houseCode, houseImg, title, desc, tags, price }) {
             </span>
           )
         })}
-        <div className={styles.price}>{price}元/月</div>
+        <div className={styles.price}>{price} 元/月</div>
       </div>
     </div>
   )
