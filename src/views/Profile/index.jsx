@@ -35,8 +35,8 @@ export class Profile extends Component {
         <div className={styles.title}>
           <img
             src={`${BASE_URL}/img/profile/bg.png`}
-            alt=""
             className={styles.bg}
+            alt=""
           />
           <div className={styles.info}>
             <img
@@ -44,18 +44,18 @@ export class Profile extends Component {
               className={styles.myIcon}
               alt=""
             />
-          </div>
-          <div className={styles.user}>
-            <div className={styles.name}>{nickname}</div>
-            <div className={styles.edit}>
-              <Button
-                type="primary"
-                size="small"
-                inline
-                onClick={() => this.props.history.push('/login')}
-              >
-                去登录
-              </Button>
+            <div className={styles.user}>
+              <div className={styles.name}>{nickname}</div>
+              <div className={styles.edit}>
+                <Button
+                  type="primary"
+                  size="small"
+                  inline
+                  onClick={() => this.props.history.push('/login')}
+                >
+                  去登录
+                </Button>
+              </div>
             </div>
           </div>
         </div>
