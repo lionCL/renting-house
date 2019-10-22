@@ -101,6 +101,14 @@ function FilterList(value) {
   })
 }
 
+///houses/{id}  查询房屋具体信息
+function getHouseInfo(id) {
+  return request({
+    url: `/houses/${id}`,
+    method: 'get'
+  })
+}
+
 export {
   getCarousel,
   getGroups,
@@ -110,5 +118,6 @@ export {
   getCityInfo,
   getAreaHouse,
   getHouseList,
-  FilterList
+  FilterList,
+  getHouseInfo
 }

@@ -193,7 +193,7 @@ export class HouseList extends Component {
           />
         </Flex>
         {/* 删选条 */}
-        <Sticky height={45}>
+        <Sticky height={40}>
           <Filter onFilter={this.onFilter} />
         </Sticky>
         {/* 房源列表 */}

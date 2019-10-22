@@ -1,6 +1,4 @@
 import React from 'react'
-//全局样式
-import './App.css'
 
 //导入路由
 import { HashRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
@@ -16,6 +14,10 @@ import Home from './views/Home'
 import Login from './views/Login'
 import CityList from './views/CityList'
 import Map from './views/Map'
+import Detail from '@/views/Detail'
+
+//全局样式   放到最后以免被其他组件样式覆盖
+import './App.css'
 
 function App() {
   return (
@@ -26,6 +28,7 @@ function App() {
           <Route path="/login" component={Login} />
           <Route path="/citylist" component={CityList} />
           <Route path="/map" component={Map} />
+          <Route path="/detail/:id" component={Detail} />
           <Redirect exact from="/" to="/home" />
         </Switch>
       </div>
