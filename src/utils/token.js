@@ -3,6 +3,7 @@
 //设置当前定位城市key值
 const CITY_KEY = 'hkzf_key'
 
+//存储当前用户token
 const CITY_TOKEN = 'hkzf_token'
 
 //当前定位城市保存到本地
@@ -14,10 +15,22 @@ export const getCity = () => {
   return JSON.parse(window.localStorage.getItem(CITY_KEY))
 }
 
+//保存token
 export const setToken = token => {
   window.localStorage.setItem(CITY_TOKEN, token)
 }
-
+//获取本地token
 export const getToken = () => {
-  return JSON.parse(window.localStorage.getItem(CITY_TOKEN))
+  return window.localStorage.getItem(CITY_TOKEN)
+}
+//删除本地用户token
+export const removeToken = () => {
+  window.localStorage.removeItem(CITY_TOKEN)
+}
+
+//判断用户是否登录
+export const isAuth = () => {
+  console.log(getToken())
+
+  return getToken()
 }

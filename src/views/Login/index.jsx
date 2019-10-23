@@ -3,11 +3,14 @@ import styles from './index.module.scss'
 //导入组件
 import NavHeader from '@/components/NavHeader'
 //第三方UI
-import { WingBlank, Flex } from 'antd-mobile'
+import { WingBlank, Flex, Toast } from 'antd-mobile'
 //表单验证
 import { Form, Field, withFormik, ErrorMessage } from 'formik'
 //验证规则
 import * as yup from 'yup'
+//导入api
+import { userLogin } from '@/api/user'
+import { setToken } from '@/utils/token'
 
 class Login extends Component {
   render() {
@@ -77,8 +80,25 @@ const EnhancedLogin = withFormik({
       .matches(REG_PASSWORD, '长度为5到12位，只能出现数字、字母、下划线')
   }),
   //3.处理提交请求
-  handleSubmit: values => {
-    console.log(values)
+  handleSubmit: async (values, { props }) => {
+    let res = await userLogin(values)
+    console.log(res)
+    const { status, body } = res
+    if (status === 200) {
+      //登录成功 保存token到本地
+      setToken(body.token)
+
+      //跳转
+      if (props.location.state) {
+        //返回跳转登录页的位置
+        props.history.replace(props.location.state.from.pathname)
+      } else {
+        //返回上一级
+        props.history.go(-1)
+      }
+    } else {
+      Toast.info('密码或账户错误', 1.5, null, false)
+    }
   }
 })(Login)
 
