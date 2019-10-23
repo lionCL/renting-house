@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { Button, Grid } from 'antd-mobile'
+import { Button, Grid, Toast } from 'antd-mobile'
 import { Link } from 'react-router-dom'
 import styles from './index.module.scss'
 import { BASE_URL } from '@/utils/url'
+//api
+import { getUserInfo } from '@/api/user'
 
 // 菜单数据
 const menus = [
@@ -23,14 +25,34 @@ export class Profile extends Component {
   constructor() {
     super()
     this.state = {
+      //判断用户是否登录
+      isLogin: false,
       userInfo: {
         avatar: '/img/avatar.png',
         nickname: '游客'
       }
     }
   }
+
+  async componentDidMount() {
+    Toast.loading('数据加载中....', 0)
+    let res = await getUserInfo()
+    // console.log(res)
+    Toast.hide()
+    const { status, body } = res
+    if (status === 200) {
+      this.setState({
+        userInfo: body,
+        isLogin: true
+      })
+    }
+  }
+
   render() {
-    const { avatar, nickname } = this.state.userInfo
+    const {
+      userInfo: { avatar, nickname },
+      isLogin
+    } = this.state
     return (
       <>
         <div className={styles.title}>
@@ -47,16 +69,30 @@ export class Profile extends Component {
             />
             <div className={styles.user}>
               <div className={styles.name}>{nickname}</div>
-              <div className={styles.edit}>
-                <Button
-                  type="primary"
-                  size="small"
-                  inline
-                  onClick={() => this.props.history.push('/login')}
-                >
-                  去登录
-                </Button>
-              </div>
+              {isLogin ? (
+                <>
+                  <div className={styles.auth}>
+                    <span onClick={this.logout}>退出</span>
+                  </div>
+                  <div className={styles.edit}>
+                    <span>编辑个人资料</span>
+                    <span className={styles.arrow}>
+                      <i className="iconfont icon-arrow"></i>
+                    </span>
+                  </div>
+                </>
+              ) : (
+                <div className={styles.edit}>
+                  <Button
+                    type="primary"
+                    size="small"
+                    inline
+                    onClick={() => this.props.history.push('/login')}
+                  >
+                    去登录
+                  </Button>
+                </div>
+              )}
             </div>
           </div>
         </div>

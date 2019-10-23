@@ -8,7 +8,7 @@ const AuthRoute = ({ children, ...rest }) => {
     <Route
       {...rest}
       render={({ location }) => {
-        console.log(isAuth())
+        // console.log(isAuth())
 
         return isAuth() ? (
           children

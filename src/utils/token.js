@@ -30,7 +30,7 @@ export const removeToken = () => {
 
 //判断用户是否登录
 export const isAuth = () => {
-  console.log(getToken())
+  // console.log(getToken())
 
   return getToken()
 }

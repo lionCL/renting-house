@@ -35,7 +35,7 @@ function App() {
           <Route path="/detail/:id" component={Detail} />
 
           {/* 需要鉴权的路由 */}
-          <AuthRoute path="/rent">
+          <AuthRoute path="/rent" exact>
             <Rent />
           </AuthRoute>
 
