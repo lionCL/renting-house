@@ -82,7 +82,7 @@ const EnhancedLogin = withFormik({
   //3.处理提交请求
   handleSubmit: async (values, { props }) => {
     let res = await userLogin(values)
-    console.log(res)
+    // console.log(res)
     const { status, body } = res
     if (status === 200) {
       //登录成功 保存token到本地

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import styles from './index.module.scss'
+import PropTypes from 'prop-types'
 
 // 所有房屋配置项
 const HOUSE_PACKAGE = [
@@ -70,25 +71,28 @@ export default class HousePackage extends Component {
   }
 
   // 根据id切换选中状态
-  toggleSelect = name => {
-    const { selectedNames } = this.state
-    let newSelectedNames
+  toggleSelect = value => {
+    if (!this.props.select) return
 
-    // 判断该项是否选中
-    if (selectedNames.indexOf(name) > -1) {
-      // 选中：从数组中删除选中项，也就是保留未选中项
-      newSelectedNames = selectedNames.filter(item => item !== name)
+    let newSelectedNames = [...this.selectedNames]
+    if (newSelectedNames.includes(value)) {
+      newSelectedNames = newSelectedNames.filter(item => {
+        return item.id !== value.id
+      })
     } else {
-      // 未选中：添加到数组中
-      newSelectedNames = [...selectedNames, name]
+      newSelectedNames.push(value)
     }
 
-    // 传递给父组件
-    this.props.onSelect && this.props.onSelect(newSelectedNames)
-
-    this.setState({
-      selectedNames: newSelectedNames
-    })
+    //跟新到state
+    this.setState(
+      {
+        selectedNames: newSelectedNames
+      },
+      () => {
+        //数据更新完毕后,把值传递给父组件
+        this.props.onSelect && this.props.onSelect(this.state.selectedNames)
+      }
+    )
   }
 
   // 渲染列表项
@@ -107,7 +111,7 @@ export default class HousePackage extends Component {
       // 展示房屋配置列表
       // 从所有的列表项中过滤出要展示的（list）列表项
       if (list) {
-        data = HOUSE_PACKAGE.filter(v => list.includes(v.name))
+        data = HOUSE_PACKAGE.filter(item => list.includes(item.name))
       }
     }
 
@@ -115,13 +119,13 @@ export default class HousePackage extends Component {
 
     return data.map(item => {
       // 判断该项是否选中
-      const isSelected = selectedNames.indexOf(item.name) > -1
+      const isSelected = selectedNames.includes(item)
 
       return (
         <li
           key={item.id}
           className={[styles.item, isSelected ? styles.active : ''].join(' ')}
-          onClick={select && (() => this.toggleSelect(item.name))}
+          onClick={() => this.toggleSelect(item)}
         >
           <p>
             <i className={`iconfont ${item.icon} ${styles.icon}`} />
@@ -135,4 +139,13 @@ export default class HousePackage extends Component {
   render() {
     return <ul className={styles.root}>{this.renderItems()}</ul>
   }
+}
+
+HousePackage.propTypes = {
+  list: PropTypes.array,
+  select: PropTypes.bool
+}
+//默认值
+HousePackage.defaultProps = {
+  select: false
 }

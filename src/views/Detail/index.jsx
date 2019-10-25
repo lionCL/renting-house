@@ -6,8 +6,12 @@ import HousePackage from '@/components/HousePackage'
 import HouseItem from '@/components/HouseItem'
 //api
 import { getHouseInfo } from '@/api'
+import { doFavorite } from '@/api/user'
+
 import { BASE_URL } from '@/utils/url'
-import { Carousel, Flex } from 'antd-mobile'
+import { Carousel, Flex, Modal, Toast } from 'antd-mobile'
+
+import { isAuth } from '@/utils/token'
 
 const BMap = window.BMap
 //label的样式
@@ -64,12 +68,16 @@ export default class Detail extends Component {
       imgHeight: 252,
       houseInfo: {
         community: '' //小区名字
-      }
+      },
+      // 标识是否收藏
+      isFavorite: false
     }
   }
 
   componentDidMount() {
     this.loadHouseInfoData()
+
+    this.getFavoritesStatus()
   }
 
   //获取房屋详细信息
@@ -85,6 +93,54 @@ export default class Detail extends Component {
         this.initMap()
       }
     )
+  }
+
+  //获取房屋收藏状态
+  getFavoritesStatus = async () => {
+    const res = await doFavorite(this.props.match.params.id, 'get')
+    // console.log(res)
+
+    if (res.status === 200) {
+      this.setState({
+        isFavorite: res.body.isFavorite
+      })
+    }
+  }
+
+  //收藏/取消收藏功能
+  handelFavorite = async () => {
+    //判断是否登录
+    if (!isAuth()) {
+      //没登录
+      Modal.alert('提示', '登录后才能收藏房源,是否去登录?', [
+        { text: '取消', onPress: null },
+        {
+          text: '去登录',
+          onPress: () => this.props.history.push('/login')
+        }
+      ])
+      return
+    }
+
+    //登录
+    const { isFavorite } = this.state
+    if (isFavorite) {
+      //取消收藏
+      const res1 = await doFavorite(this.props.match.params.id, 'delete')
+      // console.log(res1)
+      if (res1.status === 200) {
+        Toast.info('取消收藏成功')
+      }
+    } else {
+      const res2 = await doFavorite(this.props.match.params.id, 'post')
+      if (res2.status === 200) {
+        Toast.info('收藏成功')
+      }
+    }
+
+    this.setState({
+      isFavorite: !isFavorite
+    })
   }
 
   //初始化地图
@@ -305,15 +361,29 @@ export default class Detail extends Component {
 
   //渲染底部
   renderFooter = () => {
+    const { isFavorite } = this.state
     return (
       <Flex className={styles.fixedBottom}>
-        <Flex.Item>
-          <img
-            src={`${BASE_URL}/img/unstar.png`}
-            className={styles.favoriteImg}
-            alt="收藏"
-          />
-          <span className={styles.favorite}>收藏</span>
+        <Flex.Item onClick={this.handelFavorite}>
+          {isFavorite ? (
+            <>
+              <img
+                src={`${BASE_URL}/img/star.png`}
+                className={styles.favoriteImg}
+                alt="收藏"
+              />
+              <span className={styles.favorite}>已收藏</span>
+            </>
+          ) : (
+            <>
+              <img
+                src={`${BASE_URL}/img/unstar.png`}
+                className={styles.favoriteImg}
+                alt="收藏"
+              />
+              <span className={styles.favorite}>收藏</span>
+            </>
+          )}
         </Flex.Item>
         <Flex.Item>在线咨询</Flex.Item>
         <Flex.Item>

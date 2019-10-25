@@ -19,6 +19,7 @@ import CityList from './views/CityList'
 import Map from './views/Map'
 import Detail from '@/views/Detail'
 import Rent from '@/views/Rent'
+import RentAdd from '@/views/Rent/RentAdd/'
 
 //全局样式   放到最后以免被其他组件样式覆盖
 import './App.css'
@@ -37,6 +38,9 @@ function App() {
           {/* 需要鉴权的路由 */}
           <AuthRoute path="/rent" exact>
             <Rent />
+          </AuthRoute>
+          <AuthRoute path="/rent/add">
+            <RentAdd />
           </AuthRoute>
 
           <Redirect exact from="/" to="/home" />

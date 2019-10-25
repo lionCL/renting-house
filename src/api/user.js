@@ -28,3 +28,11 @@ export const getRentedHouse = () => {
     method: 'get'
   })
 }
+
+//收藏功能
+export const doFavorite = (id, type) => {
+  return request({
+    url: `/user/favorites/${id}`,
+    method: `${type}` //  get  post添加  delete 删除
+  })
+}
