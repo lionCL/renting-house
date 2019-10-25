@@ -74,7 +74,7 @@ export default class HousePackage extends Component {
   toggleSelect = value => {
     if (!this.props.select) return
 
-    let newSelectedNames = [...this.selectedNames]
+    let newSelectedNames = [...this.state.selectedNames]
     if (newSelectedNames.includes(value)) {
       newSelectedNames = newSelectedNames.filter(item => {
         return item.id !== value.id
@@ -102,7 +102,7 @@ export default class HousePackage extends Component {
     // list 表示要展示的列表项
     const { select, list } = this.props
 
-    let data
+    let data = null
     // 如果传了 select 表示：选择 房屋配置
     // 如果没传 select 表示：展示 房屋配置 列表
     if (select) {
@@ -114,8 +114,6 @@ export default class HousePackage extends Component {
         data = HOUSE_PACKAGE.filter(item => list.includes(item.name))
       }
     }
-
-    if (!data) return null
 
     return data.map(item => {
       // 判断该项是否选中

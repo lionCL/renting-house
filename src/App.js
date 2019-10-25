@@ -20,6 +20,7 @@ import Map from './views/Map'
 import Detail from '@/views/Detail'
 import Rent from '@/views/Rent'
 import RentAdd from '@/views/Rent/RentAdd/'
+import Search from '@/views/Rent/Search/'
 
 //全局样式   放到最后以免被其他组件样式覆盖
 import './App.css'
@@ -41,6 +42,9 @@ function App() {
           </AuthRoute>
           <AuthRoute path="/rent/add">
             <RentAdd />
+          </AuthRoute>
+          <AuthRoute path="/rent/search">
+            <Search />
           </AuthRoute>
 
           <Redirect exact from="/" to="/home" />

@@ -109,6 +109,18 @@ function getHouseInfo(id) {
   })
 }
 
+//小区关键字搜索
+function getCommunity({ name, id }) {
+  return request({
+    url: `/area/community`,
+    method: 'get',
+    params: {
+      name,
+      id
+    }
+  })
+}
+
 export {
   getCarousel,
   getGroups,
@@ -119,5 +131,6 @@ export {
   getAreaHouse,
   getHouseList,
   FilterList,
-  getHouseInfo
+  getHouseInfo,
+  getCommunity
 }

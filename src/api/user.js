@@ -36,3 +36,24 @@ export const doFavorite = (id, type) => {
     method: `${type}` //  get  post添加  delete 删除
   })
 }
+
+//房源图片上传
+export const uploadHouseImg = fd => {
+  return request({
+    url: '/houses/image',
+    method: 'post',
+    data: fd,
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
+//发布房源
+export const publishHouse = data => {
+  return request({
+    url: '/user/houses',
+    method: 'post',
+    data
+  })
+}
