@@ -6,7 +6,7 @@ import styles from './index.module.scss'
 import { getCommunity } from '@/api'
 import { getCurrentCity } from '@/utils/city'
 
-//一个数据处理库 有解决抖动的方法
+//一个数据处理库类似jQuery 有解决抖动的方法 _表示lodash
 import _ from 'lodash'
 
 class Search extends Component {
