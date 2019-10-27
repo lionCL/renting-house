@@ -74,7 +74,7 @@ export default class HousePackage extends Component {
   toggleSelect = value => {
     if (!this.props.select) return
 
-    let newSelectedNames = [...this.selectedNames]
+    let newSelectedNames = [...this.state.selectedNames]
     if (newSelectedNames.includes(value)) {
       newSelectedNames = newSelectedNames.filter(item => {
         return item.id !== value.id

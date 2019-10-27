@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, lazy } from 'react'
 //导入路由
 import { Route } from 'react-router-dom'
 
@@ -9,10 +9,14 @@ import { TabBar } from 'antd-mobile'
 import styles from './index.module.scss'
 
 // 导入Home的子组件
-import Index from '../Index'
-import HouseList from '../HouseList'
-import News from '../News'
-import Profile from '../Profile'
+// import Index from '../Index'
+// import HouseList from '../HouseList'
+// import News from '../News'
+// import Profile from '../Profile'
+const Index = lazy(() => import('@/views/Index/'))
+const HouseList = lazy(() => import('@/views/HouseList/'))
+const News = lazy(() => import('@/views/News/'))
+const Profile = lazy(() => import('@/views/Profile/'))
 
 class Home extends Component {
   constructor(props) {

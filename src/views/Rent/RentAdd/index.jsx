@@ -130,7 +130,7 @@ class RentAdd extends Component {
     })
     //发送请求
     const res = await uploadHouseImg(fd)
-    console.log(res)
+    // console.log(res)
     let houseImg
     if (res.status === 200) {
       houseImg = res.body.join('|')
@@ -161,7 +161,7 @@ class RentAdd extends Component {
       floor,
       community
     })
-    console.log(result)
+    // console.log(result)
 
     if (result.status === 200) {
       Toast.info('发布成功', 1.5, () => {
