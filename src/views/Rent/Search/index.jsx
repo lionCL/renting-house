@@ -6,6 +6,10 @@ import styles from './index.module.scss'
 import { getCommunity } from '@/api'
 import { getCurrentCity } from '@/utils/city'
 
+//使用仓库
+import { connect } from 'react-redux'
+import { saveCommunity } from '@/views/Rent/store/createAction'
+
 //一个数据处理库类似jQuery 有解决抖动的方法 _表示lodash
 import _ from 'lodash'
 
@@ -18,6 +22,7 @@ class Search extends Component {
     }
   }
 
+  //解决抖动问题
   searchData = _.debounce(async val => {
     //获取当前城市值
     const { value } = await getCurrentCity()
@@ -52,9 +57,17 @@ class Search extends Component {
 
   //传递值给父组件add query方式
   sendCommunityData = ({ community, communityName }) => {
-    this.props.history.replace(
-      `/rent/add?community=${community}&communityName=${communityName}`
-    )
+    // this.props.history.replace(
+    //   `/rent/add?community=${community}&communityName=${communityName}`
+    // )
+
+    // 用仓库的方式传递数据
+    this.props.save({ community, communityName })
+
+    //返回add页面
+    setTimeout(() => {
+      this.props.history.goBack()
+    }, 0)
   }
 
   // 渲染
@@ -99,4 +112,14 @@ class Search extends Component {
   }
 }
 
-export default withRouter(Search)
+export default connect(
+  null,
+  dispatch => {
+    return {
+      //返回给props一个save方法
+      save(community) {
+        dispatch(saveCommunity(community))
+      }
+    }
+  }
+)(withRouter(Search))

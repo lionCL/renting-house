@@ -8,6 +8,8 @@ import { withRouter } from 'react-router-dom'
 //API
 import { uploadHouseImg, publishHouse } from '@/api/user'
 
+import { connect } from 'react-redux'
+
 import styles from './index.module.scss'
 import {
   List,
@@ -53,20 +55,20 @@ class RentAdd extends Component {
   constructor(props) {
     super()
 
-    let community = null
-    let communityName = null
+    // let community = null
+    // let communityName = null
 
-    if (props.location.search.length > 0) {
-      const searchParams = new URLSearchParams(props.location.search)
+    // if (props.location.search.length > 0) {
+    //   const searchParams = new URLSearchParams(props.location.search)
 
-      community = searchParams.get('community')
-      communityName = searchParams.get('communityName')
-    }
+    //   community = searchParams.get('community')
+    //   communityName = searchParams.get('communityName')
+    // }
 
     this.state = {
       files: [], // 临时存取图片的数组
-      community, // 小区的id
-      communityName, // 小区的名字
+      community: props.community, // 小区的id 仓库取
+      communityName: props.communityName, // 小区的名字 仓库取
       title: '', // 标题
       description: '', // 描述
       // houseImg: '', // 图片
@@ -290,4 +292,9 @@ class RentAdd extends Component {
   }
 }
 
-export default withRouter(RentAdd)
+export default connect(
+  state => {
+    return state
+  },
+  null
+)(withRouter(RentAdd))

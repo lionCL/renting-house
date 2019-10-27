@@ -1,0 +1,2 @@
+export const SAVE_COMMUNITY = 'SAVE_COMMUNITY'
+export const GET_COMMUNITY = 'GET_COMMUNITY'
